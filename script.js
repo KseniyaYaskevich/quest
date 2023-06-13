@@ -55,3 +55,20 @@ let namePerson = 'Кто-то другой';
 
 let output = namePerson === 'Артем' ? console.log('Директор') :
   namePerson === 'Александр' ? console.log('Преподаватель') : console.log('Студент');
+
+// УРОК 4
+
+const getStr = function (str) {
+  if (typeof str === 'string') {
+    let newStr = str.trim();
+
+    if (newStr.length > 30) {
+      newStr = newStr.slice(0, 30);
+      newStr += '...';
+    }
+    return newStr;
+  }
+  return 'В качестве аргумента передана не строка';
+};
+
+console.log(getStr('Строка с текстом для проверки функции'));
