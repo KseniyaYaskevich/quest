@@ -1,57 +1,24 @@
-const num = 266219;
-let total = 1;
+let arr = ['12', '77', '123', '89', '444', '389', '215'];
+console.log();
 
-const arrayOfNumbers = num.toString().split('').map(Number);
-
-arrayOfNumbers.forEach((elem) => {
-  total *= elem;
-});
-
-console.log(`Произведение цифр числа ${num} -`, total);
-console.log(`Полученный результат возвести в степень 3 -`, total ** 3);
-console.log(`Вывести в консоль первые 2 цифры полученного числа -`, (total ** 3).toString().slice(0, 2));
-
-// УРОК 3
-
-//1
-let lang = 'en';
-let weekDays = {
-  ru: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
-  en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-};
-let result;
-
-//1a) 
-if (lang === 'ru') {
-  result = weekDays.ru;
-} else {
-  result = weekDays.en;
+for (let i = 0; i < arr.length; i++) {
+  if (arr[i].startsWith('2') || arr[i].startsWith('4')) {
+    console.log(arr[i]);
+  }
 }
 
-console.log('a) через if:', result.join(', '));
+for (let i = 2; i <= 100; i++) {
+  let primeNum = true;
 
-//1b) 
-switch (lang) {
-  case 'ru':
-    result = weekDays.ru;
-    break;
-  case 'en':
-    result = weekDays.en;
-    break;
-  default:
-    result = weekDays.ru;
-    break;
+  for (let j = 2; j < i; j++) {
+
+    if (i % j == 0) {
+      primeNum = false;
+      break;
+    }
+  }
+
+  if (primeNum) {
+    console.log(i, `Делители этого числа: 1 и ${i}`);
+  }
 }
-
-console.log('b) через switch-case:', result.join(', '));
-
-//1c)
-result = weekDays[lang];
-
-console.log('c) через многомерный массив:', result.join(', '));
-
-//2
-let namePerson = 'Кто-то другой';
-
-let output = namePerson === 'Артем' ? console.log('Директор') :
-  namePerson === 'Александр' ? console.log('Преподаватель') : console.log('Студент');
