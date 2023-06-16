@@ -1,57 +1,28 @@
-const num = 266219;
-let total = 1;
+const week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
 
-const arrayOfNumbers = num.toString().split('').map(Number);
+const presentDay = new Date();
+const pageBody = document.querySelector('body');
 
-arrayOfNumbers.forEach((elem) => {
-  total *= elem;
-});
+const createElement = () => {
+  let container = document.createElement('div');
 
-console.log(`Произведение цифр числа ${num} -`, total);
-console.log(`Полученный результат возвести в степень 3 -`, total ** 3);
-console.log(`Вывести в консоль первые 2 цифры полученного числа -`, (total ** 3).toString().slice(0, 2));
+  week.forEach((item, i) => {
+    let element = document.createElement('p');
 
-// УРОК 3
+    if (item === 'Суббота' || item === 'Воскресенье') {
+      element.innerHTML = `<i>${item}</i>`;
+    } else {
+      element.textContent = item;
+    }
 
-//1
-let lang = 'en';
-let weekDays = {
-  ru: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
-  en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    if (i + 1 === presentDay.getDay()) {
+      element.innerHTML = `<b>${item}</b>`;
+    }
+
+    container.appendChild(element);
+  });
+
+  pageBody.appendChild(container);
 };
-let result;
 
-//1a) 
-if (lang === 'ru') {
-  result = weekDays.ru;
-} else {
-  result = weekDays.en;
-}
-
-console.log('a) через if:', result.join(', '));
-
-//1b) 
-switch (lang) {
-  case 'ru':
-    result = weekDays.ru;
-    break;
-  case 'en':
-    result = weekDays.en;
-    break;
-  default:
-    result = weekDays.ru;
-    break;
-}
-
-console.log('b) через switch-case:', result.join(', '));
-
-//1c)
-result = weekDays[lang];
-
-console.log('c) через многомерный массив:', result.join(', '));
-
-//2
-let namePerson = 'Кто-то другой';
-
-let output = namePerson === 'Артем' ? console.log('Директор') :
-  namePerson === 'Александр' ? console.log('Преподаватель') : console.log('Студент');
+createElement();
