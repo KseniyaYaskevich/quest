@@ -1,57 +1,44 @@
-const num = 266219;
-let total = 1;
+const pageBody = document.querySelector('.page__body');
+const firstTimer = pageBody.querySelector('#first-timer');
+const secondTimer = pageBody.querySelector('#second-timer');
 
-const arrayOfNumbers = num.toString().split('').map(Number);
-
-arrayOfNumbers.forEach((elem) => {
-  total *= elem;
-});
-
-console.log(`Произведение цифр числа ${num} -`, total);
-console.log(`Полученный результат возвести в степень 3 -`, total ** 3);
-console.log(`Вывести в консоль первые 2 цифры полученного числа -`, (total ** 3).toString().slice(0, 2));
-
-// УРОК 3
-
-//1
-let lang = 'en';
-let weekDays = {
-  ru: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
-  en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const updateElement = (container, content) => {
+  container.textContent = content;
 };
-let result;
 
-//1a) 
-if (lang === 'ru') {
-  result = weekDays.ru;
-} else {
-  result = weekDays.en;
-}
+const formatDateFirstVersion = () => {
+  let hourStrValue = 'часов';
+  const date = new Date();
+  const options = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    weekday: 'long'
+  };
 
-console.log('a) через if:', result.join(', '));
+  if (date.getHours() === 1 || date.getHours() === 21) {
+    hourStrValue = 'час';
+  }
+  if (date.getHours() >= 2 && date.getHours() <= 4 || date.getHours() >= 22 && date.getHours() <= 24) {
+    hourStrValue = 'часа';
+  }
 
-//1b) 
-switch (lang) {
-  case 'ru':
-    result = weekDays.ru;
-    break;
-  case 'en':
-    result = weekDays.en;
-    break;
-  default:
-    result = weekDays.ru;
-    break;
-}
+  customDate = date.toLocaleString('ru', options)[0].toUpperCase() + date.toLocaleString('ru', options).slice(1).replace(/г\./, 'года');
+  resultStr = `Сегодня ${customDate}, ${date.getHours()} ${hourStrValue} ${date.getMinutes()} минут ${date.getSeconds()} секунд`;
 
-console.log('b) через switch-case:', result.join(', '));
+  updateElement(firstTimer, resultStr);
+};
 
-//1c)
-result = weekDays[lang];
+const formatDateSecondVersion = () => {
+  const date = new Date();
 
-console.log('c) через многомерный массив:', result.join(', '));
+  resultStr = date.toLocaleString().replace(/,/i, ' -');
 
-//2
-let namePerson = 'Кто-то другой';
+  updateElement(secondTimer, resultStr);
+};
 
-let output = namePerson === 'Артем' ? console.log('Директор') :
-  namePerson === 'Александр' ? console.log('Преподаватель') : console.log('Студент');
+formatDateFirstVersion();
+formatDateSecondVersion();
+
+setInterval(formatDateFirstVersion, 1000);
+setInterval(formatDateSecondVersion, 1000);
