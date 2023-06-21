@@ -1,57 +1,33 @@
-const num = 266219;
-let total = 1;
+'use strict';
+const pageBody = document.querySelector('body');
 
-const arrayOfNumbers = num.toString().split('').map(Number);
+const bookList = pageBody.querySelector('.books');
+const books = bookList.querySelectorAll('.book');
 
-arrayOfNumbers.forEach((elem) => {
-  total *= elem;
-});
+const bookThreeTitle = books[4].querySelector('h2 > a');
 
-console.log(`Произведение цифр числа ${num} -`, total);
-console.log(`Полученный результат возвести в степень 3 -`, total ** 3);
-console.log(`Вывести в консоль первые 2 цифры полученного числа -`, (total ** 3).toString().slice(0, 2));
+const advertisement = pageBody.querySelector('.adv');
 
-// УРОК 3
+const bookTwoItems = books[0].querySelectorAll('ul > li');
+const bookFiveItems = books[5].querySelectorAll('ul > li');
 
-//1
-let lang = 'en';
-let weekDays = {
-  ru: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
-  en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-};
-let result;
+const bookSixItems = books[2].querySelectorAll('ul > li');
 
-//1a) 
-if (lang === 'ru') {
-  result = weekDays.ru;
-} else {
-  result = weekDays.en;
-}
+bookList.prepend(books[1]);
+bookList.after(books[2]);
+books[4].after(books[3]);
 
-console.log('a) через if:', result.join(', '));
+pageBody.style.backgroundImage = 'url("./image/you-dont-know-js.jpg")';
 
-//1b) 
-switch (lang) {
-  case 'ru':
-    result = weekDays.ru;
-    break;
-  case 'en':
-    result = weekDays.en;
-    break;
-  default:
-    result = weekDays.ru;
-    break;
-}
+bookThreeTitle.textContent = 'Книга 3. this и Прототипы Объектов';
 
-console.log('b) через switch-case:', result.join(', '));
+advertisement.remove();
 
-//1c)
-result = weekDays[lang];
+bookTwoItems[9].after(bookTwoItems[2]);
+bookTwoItems[3].after(bookTwoItems[6]);
+bookTwoItems[6].after(bookTwoItems[8]);
 
-console.log('c) через многомерный массив:', result.join(', '));
+bookFiveItems[2].before(bookFiveItems[9], bookFiveItems[3], bookFiveItems[4]);
+bookFiveItems[8].before(bookFiveItems[5]);
 
-//2
-let namePerson = 'Кто-то другой';
-
-let output = namePerson === 'Артем' ? console.log('Директор') :
-  namePerson === 'Александр' ? console.log('Преподаватель') : console.log('Студент');
+bookSixItems[9].insertAdjacentHTML('beforebegin', '<li>Глава 8: За пределами ES6</li>');
