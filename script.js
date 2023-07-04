@@ -1,57 +1,46 @@
-const num = 266219;
-let total = 1;
+const asteroid = document.querySelector('.asteroid');
+const rat = document.querySelector('.rat');
+const buttonToggle = document.querySelector('#btn-toggle');
+const buttonReset = document.querySelector('#btn-reset');
 
-const arrayOfNumbers = num.toString().split('').map(Number);
+let idAnimationFrame;
+let count = 0;
+let isActive = false;
 
-arrayOfNumbers.forEach((elem) => {
-  total *= elem;
-});
+const animateRatEnd = () => {
+  idAnimationFrame = requestAnimationFrame(animateRatEnd);
+  count++;
 
-console.log(`Произведение цифр числа ${num} -`, total);
-console.log(`Полученный результат возвести в степень 3 -`, total ** 3);
-console.log(`Вывести в консоль первые 2 цифры полученного числа -`, (total ** 3).toString().slice(0, 2));
+  if (count < 150) {
+    asteroid.style.top = count * 5 + 'px';
+    asteroid.style.right = count * 4 + 'px';
+  }
+  if (count < 200) {
+    rat.style.right = count * 6 + 'px';
+  } else {
+    cancelAnimationFrame(idAnimationFrame);
+  }
+}
 
-// УРОК 3
+const toggleAnimation = () => {
+  isActive = !isActive;
 
-//1
-let lang = 'en';
-let weekDays = {
-  ru: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
-  en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  if (isActive) {
+    animateRatEnd();
+  } else {
+    cancelAnimationFrame(idAnimationFrame);
+  }
 };
-let result;
 
-//1a) 
-if (lang === 'ru') {
-  result = weekDays.ru;
-} else {
-  result = weekDays.en;
-}
+const resetAnimation = () => {
+  cancelAnimationFrame(idAnimationFrame);
+  count = 0;
+  isActive = false;
 
-console.log('a) через if:', result.join(', '));
+  asteroid.style.top = '0px';
+  asteroid.style.right = '0px';
+  rat.style.right = '0px';
+};
 
-//1b) 
-switch (lang) {
-  case 'ru':
-    result = weekDays.ru;
-    break;
-  case 'en':
-    result = weekDays.en;
-    break;
-  default:
-    result = weekDays.ru;
-    break;
-}
-
-console.log('b) через switch-case:', result.join(', '));
-
-//1c)
-result = weekDays[lang];
-
-console.log('c) через многомерный массив:', result.join(', '));
-
-//2
-let namePerson = 'Кто-то другой';
-
-let output = namePerson === 'Артем' ? console.log('Директор') :
-  namePerson === 'Александр' ? console.log('Преподаватель') : console.log('Студент');
+buttonToggle.addEventListener('click', toggleAnimation);
+buttonReset.addEventListener('click', resetAnimation);

@@ -1,0 +1,46 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    height: 100vh;
+    overflow: hidden;
+}
+
+.animation {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+
+    height: 100%;
+}
+
+.animation__buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.animation__button {
+    padding: 1em;
+    cursor: pointer;
+}
+
+.animation__button:first-child {
+    margin-right: 1em;
+}
+
+.animation__images {
+    position: relative;
+}
+
+.animation__image {
+    position: absolute;
+    right: 0;
+}
+
+.asteroid {
+    top: 0;
+}
+
+.rat {
+    bottom: 0;
+}
