@@ -1,57 +1,50 @@
-const num = 266219;
-let total = 1;
+const pageBody = document.querySelector('body');
 
-const arrayOfNumbers = num.toString().split('').map(Number);
+const dateNow = new Date();
+const dateNewYear = new Date('01 jan 2024 00:00:00');
 
-arrayOfNumbers.forEach((elem) => {
-  total *= elem;
-});
+const getDayTime = () => {
+  const hours = dateNow.getHours();
+  let str = '';
 
-console.log(`Произведение цифр числа ${num} -`, total);
-console.log(`Полученный результат возвести в степень 3 -`, total ** 3);
-console.log(`Вывести в консоль первые 2 цифры полученного числа -`, (total ** 3).toString().slice(0, 2));
-
-// УРОК 3
-
-//1
-let lang = 'en';
-let weekDays = {
-  ru: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
-  en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  if (hours >= 0 && hours < 6) {
+    str = 'Доброй ночи'
+  }
+  if (hours >= 6 && hours < 12) {
+    str = 'Доброе утро'
+  }
+  if (hours >= 12 && hours < 18) {
+    str = 'Добрый день'
+  }
+  if (hours >= 18 && hours < 24) {
+    str = 'Добрый вечер'
+  }
+  return str;
 };
-let result;
 
-//1a) 
-if (lang === 'ru') {
-  result = weekDays.ru;
-} else {
-  result = weekDays.en;
-}
+const getWeekDay = () => {
+  const dateString = dateNow.toLocaleString('ru', {
+    weekday: 'long'
+  });
 
-console.log('a) через if:', result.join(', '));
+  return dateString[0].toUpperCase() + dateString.slice(1);
+};
 
-//1b) 
-switch (lang) {
-  case 'ru':
-    result = weekDays.ru;
-    break;
-  case 'en':
-    result = weekDays.en;
-    break;
-  default:
-    result = weekDays.ru;
-    break;
-}
+const getCurrentTime = () => {
+  return dateNow.toLocaleTimeString() + (dateNow.getHours() >= 12 ? ' P.M.' : ' A.M.');
+};
 
-console.log('b) через switch-case:', result.join(', '));
+const getRemainingTime = () => {
+  const timeRemain = (dateNewYear - dateNow) / 1000;
 
-//1c)
-result = weekDays[lang];
+  return Math.floor(timeRemain / 60 / 60 / 24);
+};
 
-console.log('c) через многомерный массив:', result.join(', '));
-
-//2
-let namePerson = 'Кто-то другой';
-
-let output = namePerson === 'Артем' ? console.log('Директор') :
-  namePerson === 'Александр' ? console.log('Преподаватель') : console.log('Студент');
+pageBody.insertAdjacentHTML('afterbegin', `
+  <div>
+    <p>${getDayTime()}</p>
+    <p>Сегодня: ${getWeekDay()}</p>
+    <p>Текущее время: ${getCurrentTime()}</p>
+    <p>До нового года осталось ${getRemainingTime()} дней</p>
+  </div>
+`);
